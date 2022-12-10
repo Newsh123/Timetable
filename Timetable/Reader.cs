@@ -293,7 +293,7 @@ namespace Timetable
                     switch (teachers.Name)
                     {
                         case "FirstName":
-                            table.Add(new string[5]);
+                            table.Add(new string[4]);
                             count++;
                             table[count][0] = teachers.ReadElementContentAsString();
                             break;
