@@ -362,7 +362,7 @@ namespace Timetable
                     {
                         if (timetable.Name.Substring(0, 7) == "Period_")
                         {
-                            int periodNum = Convert.ToInt32(timetable.Name.Substring(7, timetable.Name.Length - 7));
+                            int periodNum = Convert.ToInt32(timetable.Name.Substring(7));
                             if (periodNum > periods)
                             {
                                 periods = periodNum;
