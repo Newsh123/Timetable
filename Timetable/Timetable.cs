@@ -87,7 +87,7 @@ namespace Timetable
             {
                 Teacher newTeacher = new Teacher(teacher, database);
                 teachers.Add(newTeacher);
-                if (subjectTeachers.Keys.Contains(newTeacher.getSubject()))
+                if (subjectTeachers.ContainsKey(newTeacher.getSubject()))
                 {
                     subjectTeachers[newTeacher.getSubject()].Add(newTeacher);
                 }
@@ -119,36 +119,16 @@ namespace Timetable
                     {
                         lessonName = $"{lessonName} {subjects[subject]}";
                     }
+                    string[] subjectGroups = new string[] { "Maths", "English", "Language", "Humanities", "Option_1", "Option_2" };
                     string subjectGroup;
-                    switch (i)
+                    if (i < 6)
                     {
-                        case 0:
-                            subjectGroup = "Maths";
-                            i++;
-                            break;
-                        case 1:
-                            subjectGroup = "English";
-                            i++;
-                            break;
-                        case 2:
-                            subjectGroup = "Language";
-                            i++;
-                            break;
-                        case 3:
-                            subjectGroup = "Humanities";
-                            i++;
-                            break;
-                        case 4:
-                            subjectGroup = "Option_1";
-                            i++;
-                            break;
-                        case 5:
-                            subjectGroup = "Option_2";
-                            i++;
-                            break;
-                        default:
-                            subjectGroup = "Science";
-                            break;
+                        subjectGroup = subjectGroups[i];
+                        i++;
+                    }
+                    else
+                    {
+                        subjectGroup = "Science";
                     }
                     string getter = $"SELECT lesson_id FROM lessons WHERE subject_name='{lessonName}' AND subject_group='{subjectGroup}';";
                     int lessonId = Convert.ToInt32(database.executeReadCommand(getter));
@@ -369,7 +349,7 @@ namespace Timetable
                         {
                             if (groupClashes[i] == lessons[k].getSubjectGroup())
                             {
-                                if (!orderedGroupAppearences.Keys.Contains(subjectGroups.Keys.ToList()[j]))
+                                if (!orderedGroupAppearences.ContainsKey(subjectGroups.Keys.ToList()[j]))
                                 {
                                     orderedGroupAppearences[subjectGroups.Keys.ToList()[j]] = new List<Lesson> { lessons[k] };
                                 }

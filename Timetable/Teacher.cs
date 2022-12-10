@@ -15,7 +15,7 @@ namespace Timetable
         {
             subject = details[3];
             partTime = Convert.ToInt32(details[4]);
-            capacity = (database.getPeriods() * 100) / partTime;
+            capacity = (database.getPeriods() * partTime) / 100;
         }
 
         public void createTimetable(int period, string code)

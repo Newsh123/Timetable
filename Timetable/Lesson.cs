@@ -57,33 +57,24 @@ namespace Timetable
 
         public string getSuffix(string grouping)
         {
-            string suffix;
-            switch (grouping)
+            Dictionary<string, string> subjectGroups = new Dictionary<string, string>
             {
-                case "Maths":
-                    suffix = "a";
-                    break;
-                case "Science":
-                    suffix = "b";
-                    break;
-                case "English":
-                    suffix = "c";
-                    break;
-                case "Language":
-                    suffix = "d";
-                    break;
-                case "Humanities":
-                    suffix = "e";
-                    break;
-                case "Option_1":
-                    suffix = "f";
-                    break;
-                case "Option_2":
-                    suffix = "g";
-                    break;
-                default:
-                    suffix = "h";
-                    break;
+                {"Maths", "a" },
+                {"Science", "b" },
+                {"English", "c" },
+                {"Language", "d" },
+                {"Humanities", "e" },
+                {"Option_1", "f" },
+                {"Option_2", "g" }
+            };
+            string suffix;
+            if (subjectGroups.ContainsKey(grouping))
+            {
+                suffix = subjectGroups[grouping];
+            }
+            else
+            {
+                suffix = "h";
             }
             return suffix;
         }

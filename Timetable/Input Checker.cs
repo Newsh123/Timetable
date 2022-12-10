@@ -31,13 +31,13 @@ namespace Timetable
         // Add Hours
         public InputChecker(bool hasPE, string maths, string english, string science, string language, string humanities, string option1, string option2, string PE, int totalPeriods)
         {
-            checkMaths(maths);
-            checkEnglish(english);
+            checkLesson(maths);
+            checkLesson(english);
             checkScience(science);
-            checkLanguage(language);
-            checkHumanities(humanities);
-            checkOption1(option1);
-            checkOption2(option2);
+            checkLesson(language);
+            checkLesson(humanities);
+            checkLesson(option1);
+            checkLesson(option2);
             if (hasPE)
             {
                 checkPE(PE);
@@ -170,32 +170,14 @@ namespace Timetable
             }
         }
 
-        private void checkMaths(string check)
+        private void checkLesson(string check)
         {
-            int maths;
-            bool isInt = int.TryParse(check, out maths);
+            int lesson;
+            bool isInt = int.TryParse(check, out lesson);
             if (isInt)
             {
-                total = total + maths;
-                if (maths < 0)
-                {
-                    validInputs = false;
-                }
-            }
-            else
-            {
-                validInputs = false;
-            }
-        }
-
-        private void checkEnglish(string check)
-        {
-            int english;
-            bool isInt = int.TryParse(check, out english);
-            if (isInt)
-            {
-                total = total + english;
-                if (english < 0)
+                total += lesson;
+                if (lesson < 0)
                 {
                     validInputs = false;
                 }
@@ -214,78 +196,6 @@ namespace Timetable
             {
                 total = total + science;
                 if (science < 0 || science % 3 != 0)
-                {
-                    validInputs = false;
-                }
-            }
-            else
-            {
-                validInputs = false;
-            }
-        }
-
-        private void checkLanguage(string check)
-        {
-            int language;
-            bool isInt = int.TryParse(check, out language);
-            if (isInt)
-            {
-                total = total + language;
-                if (language < 0)
-                {
-                    validInputs = false;
-                }
-            }
-            else
-            {
-                validInputs = false;
-            }
-        }
-
-        private void checkHumanities(string check)
-        {
-            int humanities;
-            bool isInt = int.TryParse(check, out humanities);
-            if (isInt)
-            {
-                total = total + humanities;
-                if (humanities < 0)
-                {
-                    validInputs = false;
-                }
-            }
-            else
-            {
-                validInputs = false;
-            }
-        }
-
-        private void checkOption1(string check)
-        {
-            int option1;
-            bool isInt = int.TryParse(check, out option1);
-            if (isInt)
-            {
-                total = total + option1;
-                if (option1 < 0)
-                {
-                    validInputs = false;
-                }
-            }
-            else
-            {
-                validInputs = false;
-            }
-        }
-
-        private void checkOption2(string check)
-        {
-            int option2;
-            bool isInt = int.TryParse(check, out option2);
-            if (isInt)
-            {
-                total = total + option2;
-                if (option2 < 0)
                 {
                     validInputs = false;
                 }
