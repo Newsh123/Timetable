@@ -31,6 +31,9 @@ namespace Timetable
         private string createFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "XML Files (*.xml)|*.xml";
+            dialog.FilterIndex = 0;
+            dialog.DefaultExt = "xml";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string path = Path.Combine(@"~\database");
@@ -61,7 +64,7 @@ namespace Timetable
 
         private void submit_Click(object sender, EventArgs e)
         {
-        InputChecker input = new InputChecker(studentPath, teacherPath, Days.Text, Periods.Text, classSize.Text);    
+            InputChecker input = new InputChecker(studentPath, teacherPath, Days.Text, Periods.Text, classSize.Text);    
             if (input.valid())
             {
                 Reader students = new Reader(studentPath);

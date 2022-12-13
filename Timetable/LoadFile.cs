@@ -24,6 +24,9 @@ namespace Timetable
         private void Load_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "XML Files (*.xml)|*.xml";
+            dialog.FilterIndex = 0;
+            dialog.DefaultExt = "xml";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string path = Path.Combine(@"~\database");
