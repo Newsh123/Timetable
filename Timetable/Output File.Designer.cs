@@ -260,7 +260,7 @@ namespace Timetable
             this.SearchLesson.Name = "SearchLesson";
             this.SearchLesson.Size = new System.Drawing.Size(121, 63);
             this.SearchLesson.TabIndex = 8;
-            this.SearchLesson.Text = "Search for Person";
+            this.SearchLesson.Text = "Search for Lesson";
             this.SearchLesson.UseVisualStyleBackColor = false;
             this.SearchLesson.Click += new System.EventHandler(this.SearchLesson_Click);
             // 
