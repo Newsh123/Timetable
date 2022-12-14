@@ -63,11 +63,15 @@ namespace Timetable
         // Output Person
         public InputChecker(DatabaseConnection database, string firstName, string lastName, string type)
         {
-            string command = $"SELECT {type.ToLower()}_id FROM {type.ToLower()}_list WHERE first_name='{firstName}' AND last_name='{lastName}';";
-            string result = database.executeReadCommand(command);
-            if (result == null)
+            checkType(type);
+            if (validInputs)
             {
-                validInputs = false;
+                string command = $"SELECT {type.ToLower()}_id FROM {type.ToLower()}_list WHERE first_name='{firstName}' AND last_name='{lastName}';";
+                string result = database.executeReadCommand(command);
+                if (result == null)
+                {
+                    validInputs = false;
+                }
             }
         }
 
@@ -227,6 +231,14 @@ namespace Timetable
         private void checkTotal(int totalPeriods)
         {
             if (totalPeriods != total)
+            {
+                validInputs = false;
+            }
+        }
+
+        private void checkType(string type)
+        {
+            if (type.ToLower() != "student" && type.ToLower() != "teacher")
             {
                 validInputs = false;
             }

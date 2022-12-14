@@ -36,7 +36,7 @@ namespace Timetable
             if (Convert.ToInt32(subj[subj.Length - 1]) >= 48 && Convert.ToInt32(subj[subj.Length - 1]) <= 57)
             {
                 subject = subj.Substring(0, subj.Length - 2);
-                teachingGroup = Convert.ToInt32(subj.Substring(subj.Length - 1, 1));
+                teachingGroup = Convert.ToInt32(subj.Substring(subj.Length - 1));
             }
             else
             {

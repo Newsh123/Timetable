@@ -281,9 +281,21 @@ namespace Timetable
             }
             if (clashingLessons.Count > 0)
             {
+                foreach (var thing in clashingLessons)
+                {
+                }
                 if (!moveStudents(clashingLessons))
                 {
                     return false;
+                }
+                List<Lesson> removeLessons = new List<Lesson>();
+                foreach (int index in clashingLessons)
+                {
+                    removeLessons.Add(lessons[index]);
+                }
+                foreach (Lesson lesson in removeLessons)
+                {
+                    lessons.Remove(lesson);
                 }
             }
             return true;
@@ -381,11 +393,11 @@ namespace Timetable
                     Lesson tempLesson;
                     foreach (Lesson lesson in orderedGroupAppearences[newGroup])
                     {
-                        tempLesson = new Lesson(new string[] { "0", lesson.getSubject(), newGroup }, database);
+                        tempLesson = new Lesson(new string[] { "0", $"{lesson.getSubject()} {lesson.getCode().Substring(3, 1)}", newGroup }, database);
                         foreach (Student student in lesson.getStudentList())
                         {
                             tempLesson.addStudent(student);
-                            affectedStudents.Add(students[student.getId()]);
+                            affectedStudents.Add(student);
                         }
                         newLessons.Add(tempLesson);
                     }
@@ -394,7 +406,7 @@ namespace Timetable
                         if (lesson.getSubjectGroup() == newGroup)
                         {
                             List<Student> removedStudents = lesson.removeStudents(affectedStudents);
-                            tempLesson = new Lesson(new string[] { "0", lesson.getSubject(), orderedGroupAppearences[newGroup][0].getSubjectGroup() }, database);
+                            tempLesson = new Lesson(new string[] { "0", $"{lesson.getSubject()} {lesson.getCode().Substring(3, 1)}", orderedGroupAppearences[newGroup][0].getSubjectGroup() }, database);
                             foreach (Student student in removedStudents)
                             {
                                 tempLesson.addStudent(student);
@@ -404,30 +416,24 @@ namespace Timetable
                     }
                 }
                 newLessons = checkLessons(newLessons);
-                List<int> removeList = new List<int>();
+                List<Lesson> removeList = new List<Lesson>();
                 for (int i = 0; i < newLessons.Count; i++)
                 {
                     for (int j = 0; j < newLessons.Count; j++)
                     {
-                        if (i != j && (!removeList.Contains(i) || !removeList.Contains(i)))
+                        if (i != j)
                         {
                             if (newLessons[i].getCode() == newLessons[j].getCode())
                             {
                                 newLessons[j].incrementCode();
                             }
-                            if (newLessons[i].getSubject() == newLessons[j].getSubject() && newLessons[i].getSubjectGroup() == newLessons[j].getSubjectGroup() && newLessons[i].getTeachingGroup() == newLessons[j].getTeachingGroup())
+                            if (newLessons[i].getSubject() == newLessons[j].getSubject() && newLessons[i].getSubjectGroup() == newLessons[j].getSubjectGroup() && newLessons[i].getTeachingGroup() == newLessons[j].getTeachingGroup() && newLessons[i].getStudentCount() + newLessons[j].getStudentCount() <= maxClassSize)
                             {
                                 newLessons[i].merge(newLessons[j]);
-                                removeList.Add(j);
+                                newLessons.Remove(newLessons[j]);
                             }
                         }
                     }
-                }
-                int k = 0;
-                foreach (int lesson in removeList)
-                {
-                    newLessons.RemoveAt(lesson - k);
-                    k++;
                 }
                 if (!insertTeachers(ref newLessons))
                 {
@@ -560,7 +566,7 @@ namespace Timetable
             foreach (string subject in subjectGroups.Keys)
             {
                 int leftToAdd = subjectGroups[subject];
-                int increment = periods / (leftToAdd + 1);
+                int increment = periods / (leftToAdd);
                 int i = 0;
                 while (leftToAdd > 0)
                 {
@@ -586,11 +592,11 @@ namespace Timetable
                     {
                         if (groupTimetable[i] == "Science" && sciences.Contains(lesson.getSubject()))
                         {
-                            string code = lesson.getCode().Substring(3, lesson.getCode().Length - 3);
+                            string code = lesson.getCode().Substring(3);
                             if (!vistitedClasses.ContainsKey(code))
                             {
                                 vistitedClasses.Add(code, nextNumber);
-                                nextNumber++;
+                                nextNumber = nextNumber < 2 ? nextNumber + 1 : 0;
                             }
                             if (sciences[vistitedClasses[code]] == lesson.getSubject())
                             {

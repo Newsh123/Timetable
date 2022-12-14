@@ -68,7 +68,7 @@ namespace Timetable
             if (input.valid())
             {
                 int id;
-                if (Type.Text == "Student")
+                if (Type.Text.ToLower() == "student")
                 {
                     id = database.findStudent(FirstName.Text, LastName.Text);
                 }
