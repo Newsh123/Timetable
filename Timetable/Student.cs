@@ -14,24 +14,27 @@ namespace Timetable
         {
             subjects = new Dictionary<string, int>
             {
-                { "Maths", mathsGroup(details[3]) },
-                { "English", englishGroup(details[5])},
-                { details[6], 0 },
-                { details[7], 0 },
-                { details[8], 0 },
-                { details[9], 0 }
+                { "Maths", lessonGroup(details[3]) },
+                { "English", lessonGroup(details[5])},
+                { details[6], lessonGroup(details[6]) },
+                { details[7], lessonGroup(details[7]) },
+                { details[8], lessonGroup(details[8]) },
+                { details[9], lessonGroup(details[9]) }
             };
             addScience(details[4]);
         }
-
-        private int mathsGroup(string maths)
+        private int lessonGroup(string lesson)
         {
-            return Convert.ToInt32(maths.Substring(maths.Length - 1, 1));
-        }
-
-        private int englishGroup(string english)
-        {
-            return Convert.ToInt32(english.Substring(english.Length - 1, 1));
+            int group;
+            bool endsWithNumber = int.TryParse(lesson.Substring(lesson.Length - 1), out group);
+            if (endsWithNumber)
+            {
+                return group;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         private void addScience(string science)

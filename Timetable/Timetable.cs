@@ -281,9 +281,6 @@ namespace Timetable
             }
             if (clashingLessons.Count > 0)
             {
-                foreach (var thing in clashingLessons)
-                {
-                }
                 if (!moveStudents(clashingLessons))
                 {
                     return false;
@@ -539,6 +536,14 @@ namespace Timetable
                         PETable[pass][i].Add(lesson);
                     }
                 }
+            }
+            foreach (var thing in PETable[pass])
+            {
+                foreach (var thing2 in thing)
+                {
+                    Console.WriteLine(thing2.getCode());
+                }
+                Console.WriteLine();
             }
             subjectGroups.Remove("PE");
             subjectGroups[group]++;

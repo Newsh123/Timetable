@@ -134,6 +134,7 @@ namespace Timetable
 
         public int getStudentCount()
         {
+
             return studentList.Count;
         }
 
@@ -149,7 +150,12 @@ namespace Timetable
 
         public List<Student> getStudentList()
         {
-            return studentList;
+            List<Student> newList = new List<Student>();
+            foreach (Student student in studentList)
+            {
+                newList.Add(student);
+            }
+            return newList;
         }
 
         public string getCode()
